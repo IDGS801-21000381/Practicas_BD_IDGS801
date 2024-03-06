@@ -4,36 +4,36 @@
 
 <div class="container">
 
-    <div class="container">
+  <div class="container">
 
-        <h3>Empleados</h3>
-        <h4><a href="/index">Nuevo</a></h4>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <td>Nombre</td>
-                    <td>direccion</td>
-                    <td>telefono</td>
-                    <td>correo</td>
-                    <td>Sueldo</td>
-                    <td>Eliminar</td>
-                    <td>Modificar</td>
-                </tr>
-            </thead>
-            <tbody>
-                {%for emp in empleado%}
-                <tr>
-                    <td>{{emp.nombre}}</td>
-                    <td>{{emp.direcccion}}</td>
-                    <td>{{emp.telefono}}</td>
-                    <td>{{emp.email}}</td>
-                    <td>{{emp.sueldo}}</td>
-                    <td><a href="eliminar.html?id={{emp.id}}" class="btn btn-danger">Eliminar</a></td>
-                    <td><a href="modificar.html?id={{emp.id}}" class="btn btn-warning">Modificar</a></td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-    </div>
+    <h3>Empleados</h3>
+    <h4><a href="/index">Nuevo</a></h4>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <td>Nombre</td>
+          <td>direccion</td>
+          <td>telefono</td>
+          <td>correo</td>
+          <td>Sueldo</td>
+          <td>Eliminar</td>
+          <td>Modificar</td>
+        </tr>
+      </thead>
+      <tbody>
+        {%for emp in empleado%}
+        <tr>
+          <td>{{emp.nombre}}</td>
+          <td>{{emp.direcccion}}</td>
+          <td>{{emp.telefono}}</td>
+          <td>{{emp.email}}</td>
+          <td>{{emp.sueldo}}</td>
+          <td><a href="eliminar?id={{emp.id}}" class="btn btn-danger">Eliminar</a></td>
+          <td><a href="modificar?id={{emp.id}}" class="btn btn-warning">Modificar</a></td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
 </div>
 {%endblock%}

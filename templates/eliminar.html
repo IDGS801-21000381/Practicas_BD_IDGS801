@@ -1,0 +1,60 @@
+{% extends "layout2.html" %}
+
+{% block container %}
+
+{%from "_macros.html" import camposNuevos%}
+<div class="container">
+  <div clas="row">
+
+    <form name="sent" action="/eliminar" id="contactForm" method="POST">
+      <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group controls">
+          {{ camposNuevos(form.id,class='form-control') }}
+
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group controls">
+          {{ camposNuevos(form.nombre,class='form-control') }}
+
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group controls">
+          {{ camposNuevos(form.direcccion,class='form-control') }}
+
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group controls">
+          {{ camposNuevos(form.telefono,class='form-control') }}
+
+        </div>
+      </div>
+
+      <!---->
+
+      <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group controls">
+          {{ camposNuevos(form.email,class='form-control') }}
+
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group controls">
+          {{ camposNuevos(form.sueldo,class='form-control') }}
+
+        </div>
+      </div>
+
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+      <input type="submit" class="btn btn-danger" id="eliminar" name="eliminar" value="Eliminar" />
+      <a href="ABC_Completo" class="btn btn-success">
+        <i class="icon-undo icon-while"></i>Cancelar</a>
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
