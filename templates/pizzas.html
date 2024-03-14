@@ -1,0 +1,240 @@
+{% extends "layout2.html" %}
+
+{% block container %}
+{% from "_macros.html" import camposNuevos %}
+
+<style>
+  /* Estilos CSS */
+  body {
+    background-color: #6074bd;
+    padding-top: 60px;
+  }
+
+  .form-horizontal .control-group {
+    margin-bottom: 20px;
+  }
+
+  .form-horizontal .controls {
+    margin-left: 0;
+  }
+
+  .form-horizontal .control-label {
+    width: 150px;
+    /* Ancho de las etiquetas de los campos */
+    text-align: right;
+    /* Alineación de texto a la derecha */
+    margin-top: 5px;
+  }
+
+  /* Estilos para los botones */
+  .btn-primary {
+    background-color: #28a745;
+    /* Verde */
+    border-color: #28a745;
+    /* Verde */
+  }
+
+  .btn-primary:hover {
+    background-color: #218838;
+    /* Verde más oscuro al pasar el mouse */
+    border-color: #218838;
+    /* Verde más oscuro al pasar el mouse */
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    /* Rojo */
+    border-color: #dc3545;
+    /* Rojo */
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+    /* Rojo más oscuro al pasar el mouse */
+    border-color: #c82333;
+    /* Rojo más oscuro al pasar el mouse */
+  }
+
+  /* Estilos para la tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #9c9c9c;
+  }
+
+  th,
+  td {
+    border: 1px solid #8c82ff;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #9c9c9c;
+  }
+
+  tr:nth-child(even) {
+    background-color: #8c82ff;
+  }
+</style>
+
+<div class="container">
+  <div class="text-center">
+    <h1>Ordenar pizza</h1>
+  </div>
+  <br>
+  <br>
+
+  <form class="form-horizontal" name="sent" action="/pizzas" id="contactForm" method="POST">
+    <div class="row">
+      <div class="span3">
+        <div class="control-group">
+          <div class="form-group">
+            {{ camposNuevos(form.nombre, class='form-control') }}
+          </div>
+        </div>
+      </div>
+      <div class="span3">
+        <div class="control-group">
+          <div class="form-group">
+            {{ camposNuevos(form.direcccion, class='form-control') }}
+          </div>
+        </div>
+      </div>
+      <div class="span3">
+        <div class="control-group">
+          <div class="form-group">
+            {{ camposNuevos(form.telefono, class='form-control') }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span3">
+        <div class="control-group">
+          <div class="form-group">
+            <label class="control-label">Tamaño de Pizza:</label>
+            <div class="controls">
+              {% for value, label in form.tamanopizza.choices %}
+              <label class="radio">
+                <input type="radio" name="tamanopizza" value="{{ value }}" {% if form.tamanopizza.data==value %} checked
+                  {% endif %}>
+                {{ label }}
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="span3">
+        <div class="form-group">
+          <label class="control-label">Ingredientes:</label>
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox" name="jamon" {% if form.jamon.data %} checked {% endif %}>
+              Jamon $10
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="pina" {% if form.pina.data %} checked {% endif %}>
+              Piña $10
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="champinon" {% if form.champinon.data %} checked {% endif %}>
+              Champiñon $10
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span3">
+        <div class="control-group">
+          <div class="form-group">
+            {{ camposNuevos(form.numpizza, class='form-control') }}
+          </div>
+        </div>
+      </div>
+      <div class="span3">
+        <div class="control-group">
+          <div class="form-group">
+            {{ camposNuevos(form.fecha, class='form-control') }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="submit" id="send-signup" name="signup" class="btn btn-primary" value="Registrar" />
+      </div>
+    </div>
+  </form>
+  <hr>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tamaño</th>
+        <th>Ingredientes</th>
+        <th>Num. Pizzas</th>
+        <th>Fecha</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pizza in pizzas_idcliente %}
+      <tr>
+        <td>{{ pizza.tamanopizza }}</td>
+        <td>{{ pizza.ingrediente }}</td>
+        <td>{{ pizza.numpizza }}</td>
+        <td>{{ pizza.fecha }}</td>
+        <td>{{ pizza.subtotal }}</td>
+        <td><a href="pizzasde?id={{pizza.id}}" class="btn btn-danger">Eliminar</a></td>
+        <td><a href="pizzaup?id={{pizza.id}}" class="btn btn-info">Ver</a></td>
+        <td><a href="pizzaact?id={{pizza.id}}" class="btn btn-warning">Mdoficar</a></td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="text-center" onsubmit="return confirm('¿Seria todo?'), alert('Datos guardado')">
+    <button type="button" class="btn btn-success">Terminar</button>
+  </div>
+  <hr>
+  <div class="mt-4">
+    <h2>Ventas</h2>
+    <label>Ingresa fecha de filtro</label>
+    <input id="fechafiltro">
+    <div class="controls">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <input type="submit" id="send-signup" name="signup" class="btn btn-warning" value="buscar" />
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Total</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pizza in pizzas_idcliente %}
+        <tr>
+          <td>{{ pizza.tamanopizza }}</td>
+          <td>{{ pizza.ingrediente }}</td>
+          <td>{{ pizza.numpizza }}</td>
+          <td>{{ pizza.fecha }}</td>
+          <td>{{ pizza.subtotal }}</td>
+          <td><a href="pizzasde?id={{pizza.id}}" class="btn btn-danger">Eliminar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
